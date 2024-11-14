@@ -3,11 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('login', function() {
-    return 'Login usuario';
+    return view('auth.login');
 });
 
 Route::get('logout', function() {
@@ -15,19 +15,19 @@ Route::get('logout', function() {
 });
 
 Route::get('proyectos', function() {
-    return 'Listado proyectos';
+    return view('proyectos.index');
 });
 
 Route::get('proyectos/show/{id}', function($id) {
-    return 'Vista detalle proyecto ' . $id;
+    return view('proyectos.show', array('id'=>$id));
 })->where('id', '[0-9]+');
 
 Route::get('proyectos/create', function() {
-    return 'Añadir proyecto';
+    return view('proyectos.create');
 });
 
 Route::get('proyectos/edit/{id}', function($id) {
-    return 'Modificar proyecto ' . $id;
+    return view('proyectos.edit', array('id'=>$id));
 })->where('id', '[0-9]+');
 
 Route::get('perfil/{id?}', function($id = null) {
