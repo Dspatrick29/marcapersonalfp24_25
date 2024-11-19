@@ -2,6 +2,6 @@
 
 @section('content')
 
-    Modificar proyecto {{$id}};
+    Modificar proyecto {{$id}}
 
 @stop
