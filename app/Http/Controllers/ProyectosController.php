@@ -25,7 +25,11 @@ class ProyectosController extends Controller
 
     public function getEdit($id)
     {
-        return view('proyectos.edit', array('id' => $id));
+      //Una forma:  return view('proyectos.edit', array('id' => $id));
+        //Otra forma:
+            return view('proyectos.edit')
+            ->with('proyecto', $this->arrayProyectos[$id])
+                ->with('id', $id);
     }
 
 
@@ -131,5 +135,4 @@ class ProyectosController extends Controller
             ]
         ],
     ];
-
 }
