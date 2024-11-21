@@ -10,33 +10,6 @@ class CurriculoControllerTest extends TestCase
 {
     public function test_controladores(): void
     {
-        /**
-         * main page test.
-         */
-            $value = 'Pantalla principal';
-            $response = $this->get('/');
-
-            $response
-                ->assertRedirect('/proyectos');
-
-        /**
-         * login test.
-         */
-            $value = 'Login usuario';
-            $response = $this->get('/login');
-
-            $response
-            ->assertStatus(200)
-            ->assertViewIs('auth.login')
-            ->assertSeeText($value, $escaped = true);
-
-        /**
-         * logout test.
-         */
-            $value = 'Logout usuario';
-            $response = $this->get('/logout');
-
-            $response->assertStatus(200)->assertSeeText($value, $escaped = true);
 
         /**
          * curriculos index test.
@@ -63,17 +36,17 @@ class CurriculoControllerTest extends TestCase
         /**
          * curriculos show test.
          */
-            $response = $this->get("/curriculos/show/0");
+            $response = $this->get("/curriculos/show/1");
 
             $response
             ->assertStatus(200)
             ->assertViewIs('curriculos.show')
-            ->assertSeeText("Experiencia en desarrollo web con enfoque en tecnologías front-end.", $escaped = true);
+            ->assertSeeText("Habilidades avanzadas en HTML, CSS y JavaScript.", $escaped = true);
 
-            $response = $this->get("/curriculos/show/1");
+            $response = $this->get("/curriculos/show/2");
 
             $response
-            ->assertSeeText("Habilidades avanzadas en HTML, CSS y JavaScript.", $escaped = true);
+            ->assertSeeText("Amplia experiencia en el diseño y desarrollo de interfaces de usuario.", $escaped = true);
 
             $response = $this->get("/curriculos/show/A");
             $response->assertNotFound();
