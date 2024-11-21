@@ -13,13 +13,10 @@
                 <h3>Usuario {{ $arrayCurriculos[$i]['user_id'] }}</h3>
             </header>
             <p>
-            <!--
-                El siguiente código debe ser adaptado.
-                Una vez adaptado, elimina este comentario.
-            -->
-                <a href="http://github.com/2DAW-CarlosIII/{{ $arrayCurriculos[$i]['dominio'] }}">
-                    http://github.com/2DAW-CarlosIII/{{ $arrayCurriculos[$i]['dominio'] }}
-                </a>
+                <strong>Video Curriculum:</strong> <a href="{{ $arrayCurriculos[$i]['video_curriculum'] }}">{{ $arrayCurriculos[$i]['video_curriculum'] }}</a>
+            </p>
+            <p>
+                <strong>Texto Curriculum:</strong> {{ $arrayCurriculos[$i]['texto_curriculum'] }}
             </p>
             <footer>
                 <ul class="actions">

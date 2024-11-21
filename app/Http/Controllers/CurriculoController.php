@@ -8,13 +8,14 @@ class CurriculoController extends Controller
 {
     public function getIndex()
     {
+
         return view('curriculos.index')
-            ->with('curriculos', $this->arrayCurriculos);
+            ->with('arrayCurriculos', $this->arrayCurriculos);
     }
     public function getShow($id)
     {
         return view('curriculos.show')
-            ->with('curriculo', $this->arrayCurriculos[$id])
+            ->with('arrayCurriculos', $this->arrayCurriculos[$id])
             ->with('id', $id);
     }
     public function getCreate()
@@ -24,7 +25,7 @@ class CurriculoController extends Controller
     public function getEdit($id)
     {
         return view('curriculos.edit')
-            ->with('curriculo', $this->arrayCurriculos[$id])
+            ->with('arrayCurriculos', $this->arrayCurriculos[$id])
             ->with('id', $id);
     }
 
