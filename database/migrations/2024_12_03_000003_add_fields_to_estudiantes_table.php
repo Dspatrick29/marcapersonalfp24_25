@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('estudiantes', function (Blueprint $table) {
-            $table->string('ciclo',100)->nullable()->after('nombre');
+            $table->string('apellidos')->nullable();
+            $table->string('direccion')->nullable();
+            $table->integer('votos')->default(0);
+            $table->boolean('confirmado')->default(false);
         });
     }
 
@@ -22,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('estudiantes', function (Blueprint $table) {
-            $table->dropColumn('ciclo');
+            $table->dropColumn(['apellidos', 'direccion', 'votos', 'confirmado']);
         });
     }
 };
