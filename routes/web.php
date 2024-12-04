@@ -20,23 +20,16 @@ Route::get('perfil/{id?}', function ($id = null) {
 })->where('id', '[0-9]*');
 
 Route::get('pruebaDB/{votos?}', function ($votos = null) {
-    $count = Estudiante::where('votos', '>', 100)->count();
-    $votosM = Estudiante::max('votos');
-    $votosm = Estudiante::min('votos');
-    $votosAvg = Estudiante::avg('votos');
-    $total = Estudiante::sum('votos');
+    $html = getEstadisticas();
+    //Para hacer un AND hay que encadenar los where
+    Estudiante::where('nombre', 'Juan')
+    ->where('apellidos', 'Martínez')
+    ->delete();
+    $html .= getEstadisticas();
 
-    $html = '<ul>';
-    $html .= '<li>Estudiantes con más de 100 votos: ' . $count . '</li>';
-    $html .= '<li>Estudiante con más votos: ' . $votosM . '</li>';
-    $html .= '<li>Estudiante con menos votos: ' . $votosm . '</li>';
-    $html .= '<li>Media de votos: ' . $votosAvg . '</li>';
-    $html .= '<li>Total de votos: ' . $total . '</li>';
-    $html . "</ul>\n <ul>";
+    return $html;
 
-
-
-    $estudiantes = Estudiante::where('votos', '>', $votos)->take(5)->get();
+  /*  $estudiantes = Estudiante::where('votos', '>', $votos)->take(5)->get();
 
     foreach ($estudiantes as $est) {
         $html .= '<li>' . $est->nombre . '</li>';
@@ -50,7 +43,7 @@ Route::get('pruebaDB/{votos?}', function ($votos = null) {
     $html .= 'Antes: ' . $count . '<br />';
 
     // $estudiante = new Estudiante;
-    $id = $votos ? $votos : 1; 
+    $id = $votos ? $votos : 1;
     $estudiante = Estudiante::findOrFail($id);
     $estudiante->nombre = 'Juan';
     $estudiante->apellidos = 'Martínez';
@@ -62,14 +55,32 @@ Route::get('pruebaDB/{votos?}', function ($votos = null) {
 
     $count = Estudiante::where('votos', '>', 100)->count();
     $html .=  'Después: ' . $count . '<br />';
+
     return $html . '</ul>';
-    /*
+
     foreach ($estudiante as $est) {
         echo $est->nombre;
     } */
 });
 
+    //Se crea una función que devuelve un string con las estadísticas de los estudiantes
+function getEstadisticas(){
 
+    $count = Estudiante::where('votos', '>', 100)->count();
+    $votosM = Estudiante::max('votos');
+    $votosm = Estudiante::min('votos');
+    $votosAvg = Estudiante::avg('votos');
+    $total = Estudiante::sum('votos');
+
+    $html  = '<ul>';
+    $html .= '<li>Estudiantes con más de 100 votos: ' . $count . '</li>';
+    $html .= '<li>Estudiante con más votos: ' . $votosM . '</li>';
+    $html .= '<li>Estudiante con menos votos: ' . $votosm . '</li>';
+    $html .= '<li>Media de votos: ' . $votosAvg . '</li>';
+    $html .= '<li>Total de votos: ' . $total . '</li>';
+    $html .= "</ul>";
+    return $html;
+    };
 
 include __DIR__ . '/actividades.php';
 include __DIR__ . '/curriculos.php';
