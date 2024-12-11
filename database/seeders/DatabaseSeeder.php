@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Proyecto;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Model::unguard();  // para evitar errores de asignación masiva
+        Schema::disableForeignKeyConstraints(); // para evitar errores de clave foránea
         // User::factory(10)->create();
         if(User::count() == 0) {
             if(config('app.env') ==='local'){
@@ -27,6 +31,12 @@ class DatabaseSeeder extends Seeder
 
         self::seedProyectos();
         $this->command->info('Tabla proyectos inicializada con datos!');
+        // llamadas a otros ficheros de seed
+        $this->call(ReconocimientosTableSeeder::class);
+
+        Model::reguard();  // Reactivar la protección de asignación masiva
+
+        Schema::enableForeignKeyConstraints(); // Reactivar las restricciones de clave foránea
     }
     private static function seedProyectos()
     {
@@ -40,6 +50,9 @@ class DatabaseSeeder extends Seeder
             $p->save();
         }
     }
+
+
+
     private static $arrayProyectos = [
         [
             'docente_id' => 1,
