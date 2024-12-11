@@ -63,14 +63,14 @@ class ReconocimientoControllerTest extends TestCase
         /**
          * reconocimiento show test.
          */
-            $response = $this->get("/reconocimientos/show/1");
+            $response = $this->get("/reconocimientos/show/2");
 
             $response
             ->assertStatus(200)
             ->assertViewIs('reconocimientos.show')
             ->assertSeeText('2', $escaped = true);
 
-            $response = $this->get("/reconocimientos/show/2");
+            $response = $this->get("/reconocimientos/show/3");
 
             $response
             ->assertSeeText('3', $escaped = true);
