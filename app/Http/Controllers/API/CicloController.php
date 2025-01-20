@@ -12,6 +12,7 @@ class CicloController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public $modelclass = Ciclo::class;
     public function index(Request $request)
     {
         return CicloResource::collection(
