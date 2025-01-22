@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Helpers\FilterHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CicloResource;
 use App\Models\Ciclo;
@@ -11,16 +12,22 @@ class CicloController extends Controller
 {
 
     public $modelclass = Ciclo::class;
-    
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        return CicloResource::collection(
-            Ciclo::orderBy($request->_sort ?? 'id', $request->_order ?? 'asc')
-            ->paginate($request->perPage)
-        );
+
+        $query = FilterHelper::applyFilter($request, ['nombre', 'codCiclo', 'codFamilia', 'grado']);
+
+        $query = FilterHelper::applySort($request, $query);
+
+        return $query->paginate($request->perPage);
+     //   return CicloResource::collection(
+           // $query->orderBy($request->_sort ?? 'id', $request->_order ?? 'asc')
+            //->paginate($request->perPage)
+      //  );
     }
 
     /**
@@ -46,6 +53,7 @@ class CicloController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, Ciclo $ciclo)
     {
         $cicloData = json_decode($request->getContent(), true);
