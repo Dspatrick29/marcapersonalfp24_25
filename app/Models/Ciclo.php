@@ -17,4 +17,12 @@ class Ciclo extends Model
         'grado',
         'nombre'
     ];
+
+    public static $filterColumns = [
+       'id',
+         'codCiclo',
+            'codFamilia',
+            'grado',
+            'nombre'
+    ];
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\ReactAdminResponse;
 use App\Http\Resources\CicloResource;
 use App\Models\Ciclo;
 use Illuminate\Http\Request;
@@ -15,10 +16,12 @@ class CicloController extends Controller
     public $modelclass = Ciclo::class;
     public function index(Request $request)
     {
-        return CicloResource::collection(
-            Ciclo::orderBy($request->_sort ?? 'id', $request->_order ?? 'asc')
-            ->paginate($request->perPage)
-        );
+        $middleware = new ReactAdminResponse();
+        $response = $middleware->handle($request, function ($request) {
+            return response()->json(Ciclo::all());
+        });
+
+        return $response;
     }
 
     /**
