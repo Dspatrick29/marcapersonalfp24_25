@@ -35,6 +35,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public static $filterColumns = ['name', 'email', 'nombre', 'apellidos'];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -47,4 +49,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the curriculo associated with the user.
+     */
+
+    public function curriculo()
+    {
+
+        return $this->hasOne(Curriculo::class);
+    }
+
+
 }

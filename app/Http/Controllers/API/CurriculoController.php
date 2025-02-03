@@ -12,6 +12,8 @@ class CurriculoController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public $modelclass = Curriculo::class;
+
     public function index(Request $request)
     {
         return CurriculoResource::collection(
