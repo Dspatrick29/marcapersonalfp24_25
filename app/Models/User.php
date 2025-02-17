@@ -86,4 +86,15 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Proyecto::class, 'participantes_proyectos', 'user_id', 'proyecto_id');
     }
+
+    /**
+     * Check if the user is an administrator.
+     *
+     * @return bool
+     */
+    /* Programar si existiera una tabla administradores */
+    public function isAdministrator() : bool
+    {
+        return $this->email === env('ADMIN_EMAIL');
+    }
 }
