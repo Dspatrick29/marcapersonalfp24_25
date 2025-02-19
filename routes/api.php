@@ -47,25 +47,29 @@ Route::prefix('v1')->group(function () {
     Route::get('ciclos/{cicloId}/proyectos', [ProyectosCiclosController::class, 'indexCiclosProyectos']);
     Route::post('proyectos/{proyectoId}/ciclos', [ProyectosCiclosController::class, 'storeProyectoCiclo']);
     Route::apiResource('empresas', EmpresaController::class);
-    Route::middleware(['auth:sanctum'])->group(function () {
-       // La ruta is-admin solo está disponible para usuarios autenticados
-       // y devuelve un JSON con el campo is_admin que es true si el usuario
-         // es administrador y false si no lo es
+       // Middleware para autenticación
+       Route::middleware(['auth:sanctum'])->group(function () {
+        // Ruta para verificar si el usuario es administrador
         Route::get('/is-admin', function (Request $request) {
             return response()->json([
                 'is_admin' => $request->user()->isAdministrator()
             ]);
         });
-    Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-        return $request->user();
+
+        // Ruta para obtener información del usuario autenticado
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
+
+        // Rutas de autenticación protegidas
+        Route::delete('tokens', [TokenController::class, 'destroy']);
     });
 
-    // Líneas de autenticación
+    // Rutas públicas para autenticación
     Route::post('tokens', [TokenController::class, 'store']);
-    Route::delete('tokens', [TokenController::class, 'destroy'])->middleware('auth:sanctum');
     Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-    ->middleware('guest')
-    ->name('login');
+        ->middleware('guest')
+        ->name('login');
 });
 
 
@@ -87,3 +91,4 @@ Route::any('/{any}', function (ServerRequestInterface $request) {
     }
     return $response;
 })->where('any', '.*');
+

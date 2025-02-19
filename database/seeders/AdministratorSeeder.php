@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Administrador;
+use App\Models\Administrator;
 use App\Models\User;
-
+use Illuminate\Support\Facades\DB;
 
 class AdministratorSeeder extends Seeder
 {
@@ -17,24 +17,19 @@ class AdministratorSeeder extends Seeder
     public function run()
     {
 
+        DB::table('administrators')->truncate();
         //Añado el email del administrador, en mi caso
         //voy a poner un solo administrador que este previamente definido
         // en vez de declararlo en el .env, lo pongo aqui
+    /* Creo unn array con correos de admiin y hago un insertar manuall
+    en este caso de un solo admin ell elemento 0 pero poddria adaptarlo a  varioos  coon un f */
         $adminEmail = [
-            '1481463@alu.murciaeduca.es',
+            'test@example.com',
         ];
+        DB::table('administrators')->insert([
+            'email' => $adminEmail[0],
+            'user_id' => User::where('email', $adminEmail[0])->first()->id,
+        ]);
 
-        //Recorro el array de correos
-        foreach ($adminEmail as $email) {
-            //Busco el usuario con ese correo
-            $user = User::where('email', $email)->first();
-            //Si existe el usuario
-            if ($user) {
-                //Creo un nuevo administrador
-                Administrador::create([
-                    'user_id' => $user->id,
-                ]);
-            }
-        }
     }
 }
