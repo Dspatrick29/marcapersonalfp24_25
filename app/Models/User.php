@@ -87,8 +87,20 @@ class User extends Authenticatable
         return $this->belongsToMany(Proyecto::class, 'participantes_proyectos', 'user_id', 'proyecto_id');
     }
 
+    /*
+    Voy a crear una funcion para obtemner al administrador, el cual solo
+    puede ser uno, por lo tanto voy a usar hasOne
+    */ 
+    
+    public function administrador() : HasOne
+    {
+        return $this->hasOne(Administrator::class);
+    }
+
     public function isAdministrator(): bool
     {
-        return $this->email === env('ADMIN_EMAIL');
+        return $this->administrador()->exists();
+        // Por ahora voy a comentar esta linea, ya que no tengo un email de administrador
+        // return $this->email === env('ADMIN_EMAIL');
     }
 }

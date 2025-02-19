@@ -21,7 +21,10 @@ class UserResource extends JsonResource
             ['competencias' => $this->competencias],
             ['curriculo' => $this->curriculo],
             ['ciclos' => $this->ciclos],
-            ['proyectos' => $this->proyectos]
+            ['proyectos' => $this->proyectos],
+            // Añadimos el campo is_administrator al recurso para
+            //  que se pueda acceder a él
+            ['is_administrator' => $this->isAdministrator()]
         );
     }
 }
