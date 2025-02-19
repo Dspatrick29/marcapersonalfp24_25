@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\ActividadController;
+use App\Http\Controllers\API\AdministratorController;
 use App\Http\Controllers\API\CicloController;
 use App\Http\Controllers\API\CompetenciaController;
 use App\Http\Controllers\API\CurriculoController;
@@ -46,6 +47,15 @@ Route::prefix('v1')->group(function () {
     Route::get('ciclos/{cicloId}/proyectos', [ProyectosCiclosController::class, 'indexCiclosProyectos']);
     Route::post('proyectos/{proyectoId}/ciclos', [ProyectosCiclosController::class, 'storeProyectoCiclo']);
     Route::apiResource('empresas', EmpresaController::class);
+    Route::middleware(['auth:sanctum'])->group(function () {
+       // La ruta is-admin solo está disponible para usuarios autenticados
+       // y devuelve un JSON con el campo is_admin que es true si el usuario
+         // es administrador y false si no lo es
+        Route::get('/is-admin', function (Request $request) {
+            return response()->json([
+                'is_admin' => $request->user()->isAdministrator()
+            ]);
+        });
     Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
         return $request->user();
     });
