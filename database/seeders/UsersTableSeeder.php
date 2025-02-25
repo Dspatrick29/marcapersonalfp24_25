@@ -13,15 +13,25 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        User::truncate();
+        // User::truncate();
 
-        if(User::count() == 0) {
-            if(config('app.env') ==='local'){
-                User::factory(10)->create();
-                User::factory()->create([
-                'name' => 'Test User',
-                'email' => 'test@example.com',
-                ]);
+        if (User::count() == 0) {
+
+            //Admin User
+            User::factory()->create([
+                'name' => 'Admin User',
+                'email' => env('ADMIN_EMAIL', 'admin@admin.com'), // Admin email
+                'password' => bcrypt(env('ADMIN_PASSWORD', 'password')), // Admin password
+            ]);
+
+            if (config('app.env') === 'local') {
+
+
+
+                // Crear 10 usuarios con el estado docente
+                User::factory(10)->docente()->create();
+                // Crear 30 usuarios con el estado estudiante
+                User::factory(30)->estudiante()->create();
             }
         }
     }
